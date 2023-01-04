@@ -3,6 +3,8 @@ package com.diegochueri.people.models;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.diegochueri.people.controllers.dto.PersonCreateDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,12 +18,15 @@ public class People {
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
-	@OneToMany
+	@OneToMany(mappedBy = "people")
 	private List<Adress> adress;
 
-	public People(String name, LocalDate birthDate) {
-		this.name = name;
-		this.birthDate = birthDate;
+	public People() {
+	}
+	
+	public People(PersonCreateDto person) {
+		this.name = person.getName();
+		this.birthDate = person.getBirthDate();
 	}
 
 	public String getName() {

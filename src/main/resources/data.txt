@@ -1,0 +1,4 @@
+INSERT INTO PEOPLE(name, birth_date) VALUES('Test', '1995-03-16');
+
+INSERT INTO ADRESS(cep, is_main, number, street, town, people_id) VALUES('78210078', 'true', 715, 'Rua 06', 'Cáceres-MT', 1);
+INSERT INTO ADRESS(cep, is_main, number, street, town, people_id) VALUES('26285520', 'false', 34, 'Rua 07', 'Nova Iguaçu-RJ', 1);
