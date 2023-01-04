@@ -19,7 +19,7 @@ public class Person {
 	private String name;
 	private LocalDate birthDate;
 	@OneToMany(mappedBy = "person")
-	private List<Adress> adress;
+	private List<Adress> addresses;
 
 	public Person() {
 	}
@@ -49,11 +49,11 @@ public class Person {
 		return id;
 	}
 
-	public List<Adress> getAdress() {
-		return adress;
+	public List<Adress> getAddresses() {
+		return addresses;
 	}
 
-	public void setAdress(List<Adress> adress) {
-		this.adress = adress;
+	public void setAdresses(List<Adress> addresses) {
+		this.addresses = addresses;
 	}
 }
