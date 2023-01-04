@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.diegochueri.people.controllers.dto.PeopleDto;
 import com.diegochueri.people.controllers.dto.PersonCreateDto;
-import com.diegochueri.people.models.People;
+import com.diegochueri.people.controllers.dto.PersonDto;
+import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.AdressRepository;
-import com.diegochueri.people.repositories.PeopleRepository;
+import com.diegochueri.people.repositories.PersonRepository;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/people")
-public class PeopleController {
+@RequestMapping("/persons")
+public class PersonController {
 	
 	@Autowired
-	private PeopleRepository peopleRepository;
+	private PersonRepository personRepository;
 	
 	@Autowired
 	private AdressRepository adressRepository;
 	
 	@GetMapping
-	public List<PeopleDto> listAll() {
-		List<People> person = peopleRepository.findAll();
-		return PeopleDto.generateDtoList(person);
+	public List<PersonDto> listAll() {
+		List<Person> person = personRepository.findAll();
+		return PersonDto.generateDtoList(person);
 	}
 	
 	@PostMapping
-	public ResponseEntity<PeopleDto> register(@RequestBody @Valid PersonCreateDto personCreate, UriComponentsBuilder uriBuilder) {
-		People person = new People(personCreate);
-		peopleRepository.save(person);
-		URI uri = uriBuilder.path("/people/{id}").buildAndExpand(person.getId()).toUri();
-		return ResponseEntity.created(uri).body(new PeopleDto(person));
+	public ResponseEntity<PersonDto> register(@RequestBody @Valid PersonCreateDto personCreate, UriComponentsBuilder uriBuilder) {
+		Person person = new Person(personCreate);
+		personRepository.save(person);
+		URI uri = uriBuilder.path("/person/{id}").buildAndExpand(person.getId()).toUri();
+		return ResponseEntity.created(uri).body(new PersonDto(person));
 	}
 	
 //	@GetMapping("/[id]")

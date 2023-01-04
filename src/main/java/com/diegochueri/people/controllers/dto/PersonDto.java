@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.diegochueri.people.models.Adress;
-import com.diegochueri.people.models.People;
+import com.diegochueri.people.models.Person;
 
-public class PeopleDto {
+public class PersonDto {
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
 	private List<Adress> adress;
 
-	public PeopleDto(People people) {
+	public PersonDto(Person people) {
 		this.id = people.getId();
 		this.name = people.getName();
 		this.birthDate = people.getBirthDate();
@@ -35,7 +35,7 @@ public class PeopleDto {
 		return adress;
 	}
 
-	public static List<PeopleDto> generateDtoList(List<People> people) {
-		return people.stream().map(PeopleDto::new).collect(Collectors.toList());
+	public static List<PersonDto> generateDtoList(List<Person> person) {
+		return person.stream().map(PersonDto::new).collect(Collectors.toList());
 	}
 }

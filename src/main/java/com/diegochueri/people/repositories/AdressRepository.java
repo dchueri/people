@@ -8,5 +8,5 @@ import com.diegochueri.people.models.Adress;
 
 public interface AdressRepository extends JpaRepository<Adress, Long> {
 	
-	List<Adress> findAllByPeopleId(Long Id);
+	List<Adress> findAllByPersonId(Long Id);
 }

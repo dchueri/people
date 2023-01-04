@@ -17,18 +17,18 @@ public class Adress {
 	private String town;
 	private boolean isMain;
 	@ManyToOne
-	private People people;
+	private Person person;
 	
 	public Adress() {
 	}
 
-	public Adress(String street, String cep, String number, String town, boolean isMain, People people) {
+	public Adress(String street, String cep, String number, String town, boolean isMain, Person person) {
 		this.street = street;
 		this.cep = cep;
 		this.number = number;
 		this.town = town;
 		this.isMain = isMain;
-		this.people = people;
+		this.person = person;
 	}
 
 	public String getStreet() {
@@ -71,11 +71,11 @@ public class Adress {
 		this.isMain = isMain;
 	}
 
-	public People getPeople() {
-		return people;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setPeople(People people) {
-		this.people = people;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 }
