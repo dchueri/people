@@ -1,15 +1,28 @@
 package com.diegochueri.people.models;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class People {
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
-	private String street;
-	private String cep;
-	private String number;
-	private String town;
+	@OneToMany
+	private List<Adress> adress;
+
+	public People(String name, LocalDate birthDate) {
+		this.name = name;
+		this.birthDate = birthDate;
+	}
 
 	public String getName() {
 		return name;
@@ -27,39 +40,15 @@ public class People {
 		this.birthDate = birthDate;
 	}
 
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getTown() {
-		return town;
-	}
-
-	public void setTown(String town) {
-		this.town = town;
-	}
-
 	public Long getId() {
 		return id;
+	}
+
+	public List<Adress> getAdress() {
+		return adress;
+	}
+
+	public void setAdress(List<Adress> adress) {
+		this.adress = adress;
 	}
 }
