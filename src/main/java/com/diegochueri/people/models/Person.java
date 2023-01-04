@@ -12,19 +12,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class People {
+public class Person {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
-	@OneToMany(mappedBy = "people")
+	@OneToMany(mappedBy = "person")
 	private List<Adress> adress;
 
-	public People() {
+	public Person() {
 	}
 	
-	public People(PersonCreateDto person) {
+	public Person(PersonCreateDto person) {
 		this.name = person.getName();
 		this.birthDate = person.getBirthDate();
 	}
