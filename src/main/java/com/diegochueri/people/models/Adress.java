@@ -18,13 +18,17 @@ public class Adress {
 	private boolean isMain;
 	@ManyToOne
 	private People people;
+	
+	public Adress() {
+	}
 
-	public Adress(String street, String cep, String number, String town, boolean isMain) {
+	public Adress(String street, String cep, String number, String town, boolean isMain, People people) {
 		this.street = street;
 		this.cep = cep;
 		this.number = number;
 		this.town = town;
 		this.isMain = isMain;
+		this.people = people;
 	}
 
 	public String getStreet() {

@@ -17,7 +17,6 @@ public class PeopleDto {
 		this.id = people.getId();
 		this.name = people.getName();
 		this.birthDate = people.getBirthDate();
-		this.adress = people.getAdress();
 	}
 
 	public Long getId() {
