@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Adress {
+public class Address {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -19,10 +19,10 @@ public class Adress {
 	@ManyToOne
 	private Person person;
 	
-	public Adress() {
+	public Address() {
 	}
 
-	public Adress(String street, String cep, String number, String town, boolean isMain, Person person) {
+	public Address(String street, String cep, String number, String town, boolean isMain, Person person) {
 		this.street = street;
 		this.cep = cep;
 		this.number = number;

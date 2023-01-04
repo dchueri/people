@@ -1,8 +1,8 @@
 package com.diegochueri.people.controllers.dto;
 
-import com.diegochueri.people.models.Adress;
+import com.diegochueri.people.models.Address;
 
-public class AdressDto {
+public class AddressDto {
 	private Long id;
 	private String street;
 	private String cep;
@@ -10,7 +10,7 @@ public class AdressDto {
 	private String town;
 	private boolean isMain;
 	
-	public AdressDto(Adress adress) {
+	public AddressDto(Address adress) {
 		this.id = adress.getId();
 		this.street = adress.getStreet();
 		this.cep = adress.getCep();
