@@ -4,12 +4,21 @@ import com.diegochueri.people.models.Adress;
 import com.diegochueri.people.models.People;
 import com.diegochueri.people.repositories.PeopleRepository;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class AdressCreateDto {
+	@NotNull @NotEmpty
 	private String street;
+	@NotNull @NotEmpty
 	private String cep;
+	@NotNull @NotEmpty
 	private String number;
+	@NotNull @NotEmpty
 	private String town;
+	@NotNull @NotEmpty
 	private boolean isMain;
+	@NotNull @NotEmpty
 	private Long peopleId;
 
 	public String getStreet() {

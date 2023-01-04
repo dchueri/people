@@ -18,6 +18,8 @@ import com.diegochueri.people.models.People;
 import com.diegochueri.people.repositories.AdressRepository;
 import com.diegochueri.people.repositories.PeopleRepository;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/people")
 public class PeopleController {
@@ -35,7 +37,7 @@ public class PeopleController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PeopleDto> register(@RequestBody PersonCreateDto personCreate, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<PeopleDto> register(@RequestBody @Valid PersonCreateDto personCreate, UriComponentsBuilder uriBuilder) {
 		People person = new People(personCreate);
 		peopleRepository.save(person);
 		URI uri = uriBuilder.path("/people/{id}").buildAndExpand(person.getId()).toUri();
