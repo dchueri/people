@@ -30,6 +30,10 @@ public class Adress {
 		this.isMain = isMain;
 		this.person = person;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
 	public String getStreet() {
 		return street;
@@ -63,7 +67,7 @@ public class Adress {
 		this.town = town;
 	}
 
-	public boolean isMain() {
+	public boolean getIsMain() {
 		return isMain;
 	}
 
