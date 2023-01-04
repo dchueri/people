@@ -17,7 +17,6 @@ import com.diegochueri.people.controllers.dto.PersonCreateDto;
 import com.diegochueri.people.controllers.dto.PersonDetailsDto;
 import com.diegochueri.people.controllers.dto.PersonDto;
 import com.diegochueri.people.models.Person;
-import com.diegochueri.people.repositories.AdressRepository;
 import com.diegochueri.people.repositories.PersonRepository;
 
 import jakarta.validation.Valid;
@@ -28,9 +27,6 @@ public class PersonController {
 
 	@Autowired
 	private PersonRepository personRepository;
-
-	@Autowired
-	private AdressRepository adressRepository;
 
 	@GetMapping
 	public List<PersonDto> listAll() {

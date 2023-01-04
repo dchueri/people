@@ -1,13 +1,13 @@
 package com.diegochueri.people.controllers.dto;
 
-import com.diegochueri.people.models.Adress;
+import com.diegochueri.people.models.Address;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.PersonRepository;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class AdressCreateDto {
+public class AddressCreateDto {
 	@NotNull @NotEmpty
 	private String street;
 	@NotNull @NotEmpty
@@ -69,8 +69,8 @@ public class AdressCreateDto {
 		this.personId = personId;
 	}
 
-	public Adress setAdress(PersonRepository repository) {
+	public Address setAdress(PersonRepository repository) {
 		Person person = repository.findById(personId).orElseThrow(IllegalArgumentException::new);
-		return new Adress(street, cep, number, town, isMain, person);
+		return new Address(street, cep, number, town, isMain, person);
 	}
 }
