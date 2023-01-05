@@ -13,30 +13,6 @@ public class AddressUpdateDto {
 	private String town;
 	private boolean isMain;
 
-	public Address updateAddress(Address address, AddressUpdateDto addressInfoToUpdate) {
-
-		if (addressInfoToUpdate.getStreet() != null) {
-			address.setStreet(addressInfoToUpdate.getStreet());
-		}
-		if (addressInfoToUpdate.getCep() != null) {
-			address.setCep(addressInfoToUpdate.getCep());
-		}
-
-		if (addressInfoToUpdate.getNumber() != null) {
-			address.setNumber(addressInfoToUpdate.getNumber());
-		}
-
-		if (addressInfoToUpdate.getTown() != null) {
-			address.setTown(addressInfoToUpdate.getTown());
-		}
-
-		if (addressInfoToUpdate.getIsMain() != address.getIsMain()) {
-			address.setIsMain(addressInfoToUpdate.getIsMain());
-		}
-
-		return address;
-	}
-
 	public String getStreet() {
 		return street;
 	}
