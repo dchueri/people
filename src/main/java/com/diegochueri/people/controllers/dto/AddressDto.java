@@ -39,7 +39,7 @@ public class AddressDto {
 		return town;
 	}
 
-	public boolean isMain() {
+	public boolean getIsMain() {
 		return isMain;
 	}
 	
