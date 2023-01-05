@@ -13,7 +13,7 @@ import com.diegochueri.people.repositories.AddressRepository;
 
 @Service
 public class AddressService {
-	
+
 	@Autowired
 	private AddressRepository repository;
 
@@ -29,6 +29,9 @@ public class AddressService {
 
 	public Address add(AddressCreateDto addressCreate, Person person) {
 		Address address = new Address(addressCreate, person);
+		if (address.getIsMain()) {
+			this.removeMainAddress(person);
+		}
 		return repository.save(address);
 	}
 
@@ -46,9 +49,21 @@ public class AddressService {
 			address.setTown(addressInfoToUpdate.getTown());
 		}
 		if (addressInfoToUpdate.getIsMain() != address.getIsMain()) {
+			if (addressInfoToUpdate.getIsMain() == true) {
+				this.removeMainAddress(address.getPerson());
+			}
 			address.setIsMain(addressInfoToUpdate.getIsMain());
 		}
 
 		return address;
+	}
+
+	public void removeMainAddress(Person person) {
+		List<Address> addresses = person.getAddresses();
+		addresses.forEach(adress -> {
+			if (adress.getIsMain() == true) {
+				adress.setIsMain(false);
+			}
+		});
 	}
 }
