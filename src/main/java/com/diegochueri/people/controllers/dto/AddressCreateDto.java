@@ -1,9 +1,5 @@
 package com.diegochueri.people.controllers.dto;
 
-import com.diegochueri.people.models.Address;
-import com.diegochueri.people.models.Person;
-import com.diegochueri.people.repositories.PersonRepository;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,9 +12,9 @@ public class AddressCreateDto {
 	private String number;
 	@NotNull @NotEmpty
 	private String town;
-	@NotNull @NotEmpty
+	@NotNull
 	private boolean isMain;
-	@NotNull @NotEmpty
+	@NotNull
 	private Long personId;
 
 	public String getStreet() {
@@ -53,24 +49,19 @@ public class AddressCreateDto {
 		this.town = town;
 	}
 
-	public boolean isMain() {
+	public boolean getIsMain() {
 		return isMain;
 	}
 
-	public void setMain(boolean isMain) {
+	public void setIsMain(boolean isMain) {
 		this.isMain = isMain;
 	}
 
-	public Long getPerson() {
+	public Long getPersonId() {
 		return personId;
 	}
 
-	public void setPerson(Long personId) {
+	public void setPersonId(Long personId) {
 		this.personId = personId;
-	}
-
-	public Address setAdress(PersonRepository repository) {
-		Person person = repository.findById(personId).orElseThrow(IllegalArgumentException::new);
-		return new Address(street, cep, number, town, isMain, person);
 	}
 }

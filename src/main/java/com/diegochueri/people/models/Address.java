@@ -1,5 +1,7 @@
 package com.diegochueri.people.models;
 
+import com.diegochueri.people.controllers.dto.AddressCreateDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +33,15 @@ public class Address {
 		this.person = person;
 	}
 	
+	public Address(AddressCreateDto addressCreate, Person person) {
+		this.street = addressCreate.getStreet();
+		this.cep = addressCreate.getCep();
+		this.number = addressCreate.getNumber();
+		this.town = addressCreate.getTown();
+		this.isMain = addressCreate.getIsMain();
+		this.person = person;
+	}
+
 	public Long getId() {
 		return id;
 	}

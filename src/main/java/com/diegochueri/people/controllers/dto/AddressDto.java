@@ -18,6 +18,30 @@ public class AddressDto {
 		this.town = adress.getTown();
 		this.isMain = adress.getIsMain();
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public String getTown() {
+		return town;
+	}
+
+	public boolean isMain() {
+		return isMain;
+	}
 	
 	
 }
