@@ -11,14 +11,14 @@ public class PersonDetailsDto {
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
-	private List<AddressDto> adresses;
+	private List<AddressDto> addresses;
 
 	public PersonDetailsDto(Person person) {
 		this.id = person.getId();
 		this.name = person.getName();
 		this.birthDate = person.getBirthDate();
-		this.adresses = new ArrayList<>();
-		this.adresses.addAll(person.getAddresses().stream().map(AddressDto::new).collect(Collectors.toList()));
+		this.addresses = new ArrayList<>();
+		this.addresses.addAll(person.getAddresses().stream().map(AddressDto::new).collect(Collectors.toList()));
 	}
 
 	public Long getId() {
@@ -34,7 +34,7 @@ public class PersonDetailsDto {
 	}
 
 	public List<AddressDto> getAdresses() {
-		return adresses;
+		return addresses;
 	}
 
 }
