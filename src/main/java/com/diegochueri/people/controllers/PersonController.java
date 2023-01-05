@@ -23,8 +23,8 @@ import com.diegochueri.people.controllers.dto.PersonDto;
 import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Address;
 import com.diegochueri.people.models.Person;
-import com.diegochueri.people.repositories.AddressRepository;
-import com.diegochueri.people.repositories.PersonRepository;
+import com.diegochueri.people.services.AddressService;
+import com.diegochueri.people.services.PersonService;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -34,46 +34,44 @@ import jakarta.validation.Valid;
 public class PersonController {
 
 	@Autowired
-	private PersonRepository personRepository;
+	private PersonService personService;
 
 	@Autowired
-	private AddressRepository addressRepository;
+	private AddressService addressService;
 
 	@GetMapping
 	public List<PersonDto> listAllPersons() {
-		List<Person> person = personRepository.findAll();
+		List<Person> person = personService.getAll();
 		return PersonDto.generateDtoList(person);
 	}
 
 	@PostMapping
 	public ResponseEntity<PersonDto> registerPerson(@RequestBody @Valid PersonCreateDto personCreate,
 			UriComponentsBuilder uriBuilder) {
-		Person person = new Person(personCreate);
-		personRepository.save(person);
+		Person person = personService.add(personCreate);
 		URI uri = uriBuilder.path("/person/{id}").buildAndExpand(person.getId()).toUri();
 		return ResponseEntity.created(uri).body(new PersonDto(person));
 	}
 
 	@GetMapping("/{id}")
 	public PersonDetailsDto listOnePerson(@PathVariable Long id) {
-		Person person = personRepository.getReferenceById(id);
+		Person person = personService.getOneById(id);
 		return new PersonDetailsDto(person);
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<PersonDto> updatePerson(@PathVariable Long id, @RequestBody PersonUpdateDto personUpdate) {
-		Person person = personRepository.getReferenceById(id);
-		Person personUpdated = personUpdate.updatePerson(person, personUpdate);
+		Person person = personService.getOneById(id);
+		Person personUpdated = personService.update(person, personUpdate);
 		return ResponseEntity.ok(new PersonDto(personUpdated));
 	}
 
 	@PostMapping("/{id}/addresses")
 	public ResponseEntity<AddressDto> registerAddress(@PathVariable Long id,
 			@RequestBody @Valid AddressCreateDto addressCreate, UriComponentsBuilder uriBuilder) {
-		Person person = personRepository.getReferenceById(id);
-		Address address = new Address(addressCreate, person);
-		addressRepository.save(address);
+		Person person = personService.getOneById(id);
+		Address address = addressService.add(addressCreate, person);
 		URI uri = uriBuilder.path("/person/{id}/addresses").buildAndExpand(address.getId()).toUri();
 		return ResponseEntity.created(uri).body(new AddressDto(address));
 	}
@@ -82,8 +80,8 @@ public class PersonController {
 	@Transactional
 	public ResponseEntity<AddressDto> updatePerson(@PathVariable Long id, @PathVariable Long addressId,
 			@RequestBody AddressUpdateDto addressUpdate) {
-		Address address = addressRepository.getReferenceById(id);
-		Address addressUpdated = addressUpdate.updateAddress(address, addressUpdate);
+		Address address = addressService.getOneById(id);
+		Address addressUpdated = addressService.update(address, addressUpdate);
 		return ResponseEntity.ok(new AddressDto(addressUpdated));
 	}
 }
