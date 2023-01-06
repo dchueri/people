@@ -22,6 +22,7 @@ import com.diegochueri.people.repositories.PersonRepository;
 @DataJpaTest
 public class PersonServiceTest {
 
+	Long id = (long) 1;
 	String name = "Person";
 	String updatedName = "Person Updated";
 	LocalDate birthDate = LocalDate.parse("1995-03-16");
@@ -44,20 +45,21 @@ public class PersonServiceTest {
 	}
 
 	@Test
-	void whenGetOneByIdThenReturnAPerson() {
-		when(repository.getReferenceById(Mockito.anyLong())).thenReturn(person);
-		Person response = service.getOneById((long) 1);
-		Assertions.assertNotNull(response);
-		Assertions.assertEquals(Person.class, response.getClass());
-	}
-
-	@Test
-	void whenFindAllThenReturnAPersonsList() {
+	void whenGetAllThenReturnAPersonsList() {
 		when(repository.findAll()).thenReturn(List.of(person, person));
 		List<Person> response = service.getAll();
 		Assertions.assertNotNull(response);
 		Assertions.assertEquals(2, response.size());
 		Assertions.assertEquals(Person.class, response.get(0).getClass());
+	}
+
+	@Test
+	void whenGetOneByIdThenReturnAPerson() {
+		when(repository.getReferenceById(Mockito.anyLong())).thenReturn(person);
+		Person response = service.getOneById(id);
+		Assertions.assertNotNull(response);
+		Assertions.assertEquals(Person.class, response.getClass());
+		Assertions.assertEquals(id, response.getId());
 	}
 
 	@Test
@@ -76,22 +78,22 @@ public class PersonServiceTest {
 	void whenUpdateNameThenReturnAPersonWithOnlyNameUpdated() {
 		personUpdate = new PersonUpdateDto();
 		personUpdate.setName(updatedName);
-		
+
 		Person response = service.update(person, personUpdate);
-		
+
 		Assertions.assertEquals(Person.class, response.getClass());
-		Assertions.assertNotEquals(name, personUpdate.getName());
+		Assertions.assertNotEquals(name, response.getName());
 		Assertions.assertEquals(updatedName, response.getName());
 		Assertions.assertEquals(birthDate, response.getBirthDate());
 	}
-	
+
 	@Test
 	void whenUpdateBirthDateThenReturnAPersonWithOnlyBirthDateUpdated() {
 		personUpdate = new PersonUpdateDto();
 		personUpdate.setBirthDate(updatedBirthDate);
-		
+
 		Person response = service.update(person, personUpdate);
-		
+
 		Assertions.assertEquals(Person.class, response.getClass());
 		Assertions.assertNotEquals(birthDate, response.getBirthDate());
 		Assertions.assertEquals(name, response.getName());
@@ -100,6 +102,7 @@ public class PersonServiceTest {
 
 	private void addPersons() {
 		person = new Person();
+		person.setId((long) 1);
 		person.setName(name);
 		person.setBirthDate(birthDate);
 

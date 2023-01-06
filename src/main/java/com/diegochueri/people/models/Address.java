@@ -10,8 +10,9 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Address {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String street;
 	private String cep;
@@ -20,7 +21,7 @@ public class Address {
 	private boolean isMain;
 	@ManyToOne
 	private Person person;
-	
+
 	public Address() {
 	}
 
@@ -32,7 +33,7 @@ public class Address {
 		this.isMain = isMain;
 		this.person = person;
 	}
-	
+
 	public Address(AddressCreateDto addressCreate, Person person) {
 		this.street = addressCreate.getStreet();
 		this.cep = addressCreate.getCep();
@@ -44,6 +45,10 @@ public class Address {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getStreet() {

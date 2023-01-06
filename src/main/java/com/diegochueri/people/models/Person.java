@@ -13,8 +13,9 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Person {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private LocalDate birthDate;
@@ -23,7 +24,7 @@ public class Person {
 
 	public Person() {
 	}
-	
+
 	public Person(PersonCreateDto person) {
 		this.name = person.getName();
 		this.birthDate = person.getBirthDate();
@@ -47,6 +48,10 @@ public class Person {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public List<Address> getAddresses() {
