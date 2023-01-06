@@ -11,10 +11,13 @@ public class PersonDto {
 	private String name;
 	private LocalDate birthDate;
 
-	public PersonDto(Person people) {
-		this.id = people.getId();
-		this.name = people.getName();
-		this.birthDate = people.getBirthDate();
+	public PersonDto() {
+	}
+
+	public PersonDto(Person person) {
+		this.id = person.getId();
+		this.name = person.getName();
+		this.birthDate = person.getBirthDate();
 	}
 
 	public Long getId() {
@@ -29,7 +32,7 @@ public class PersonDto {
 		return birthDate;
 	}
 
-	public static List<PersonDto> generateDtoList(List<Person> person) {
-		return person.stream().map(PersonDto::new).collect(Collectors.toList());
+	public List<PersonDto> generateDtoList(List<Person> personList) {
+		return personList.stream().map(PersonDto::new).collect(Collectors.toList());
 	}
 }

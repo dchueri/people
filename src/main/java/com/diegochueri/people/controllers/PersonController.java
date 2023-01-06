@@ -38,11 +38,13 @@ public class PersonController {
 
 	@Autowired
 	private AddressService addressService;
-
+	
 	@GetMapping
-	public List<PersonDto> listAllPersons() {
-		List<Person> person = personService.getAll();
-		return PersonDto.generateDtoList(person);
+	public ResponseEntity<List<PersonDto>> listAllPersons() {
+		PersonDto personDto = new PersonDto();
+		List<Person> personList = personService.getAll();
+		List<PersonDto> personDtoList = personDto.generateDtoList(personList);
+		return ResponseEntity.ok().body(personDtoList);
 	}
 
 	@PostMapping

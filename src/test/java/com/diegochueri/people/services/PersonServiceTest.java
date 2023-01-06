@@ -18,10 +18,11 @@ import com.diegochueri.people.controllers.dto.PersonCreateDto;
 import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.PersonRepository;
+import com.diegochueri.people.utils.PersonMockCreate;
 
 @DataJpaTest
 public class PersonServiceTest {
-
+	
 	Long id = (long) 1;
 	String name = "Person";
 	String updatedName = "Person Updated";
@@ -34,6 +35,8 @@ public class PersonServiceTest {
 	@Mock
 	private PersonRepository repository;
 
+	private PersonMockCreate personsMock = new PersonMockCreate();
+
 	private Person person;
 	private PersonCreateDto personCreate;
 	private PersonUpdateDto personUpdate;
@@ -41,7 +44,8 @@ public class PersonServiceTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		addPersons();
+		person = personsMock.personAdd();
+		personCreate = personsMock.personCreateDtoAdd();
 	}
 
 	@Test
@@ -98,16 +102,5 @@ public class PersonServiceTest {
 		Assertions.assertNotEquals(birthDate, response.getBirthDate());
 		Assertions.assertEquals(name, response.getName());
 		Assertions.assertEquals(updatedBirthDate, response.getBirthDate());
-	}
-
-	private void addPersons() {
-		person = new Person();
-		person.setId((long) 1);
-		person.setName(name);
-		person.setBirthDate(birthDate);
-
-		personCreate = new PersonCreateDto();
-		personCreate.setName(name);
-		personCreate.setBirthDate(birthDate);
 	}
 }
