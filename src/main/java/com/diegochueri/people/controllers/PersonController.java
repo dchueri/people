@@ -45,7 +45,7 @@ public class PersonController {
 		PersonDto personDto = new PersonDto();
 		List<Person> personList = personService.getAll();
 		List<PersonDto> personDtoList = personDto.generateDtoList(personList);
-		return ResponseEntity.ok().body(personDtoList);
+		return ResponseEntity.ok(personDtoList);
 	}
 
 	@PostMapping
@@ -56,9 +56,9 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}")
-	public PersonDetailsDto listOnePerson(@PathVariable Long id) {
+	public ResponseEntity<PersonDetailsDto> listOnePerson(@PathVariable Long id) {
 		Person person = personService.getOneById(id);
-		return new PersonDetailsDto(person);
+		return ResponseEntity.ok(new PersonDetailsDto(person));
 	}
 
 	@PutMapping("/{id}")
