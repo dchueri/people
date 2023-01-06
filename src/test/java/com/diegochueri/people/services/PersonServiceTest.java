@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.diegochueri.people.controllers.dto.PersonCreateDto;
+import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.PersonRepository;
 
@@ -22,7 +23,9 @@ import com.diegochueri.people.repositories.PersonRepository;
 public class PersonServiceTest {
 
 	String name = "Person";
+	String updatedName = "Person Updated";
 	LocalDate birthDate = LocalDate.parse("1995-03-16");
+	LocalDate updatedBirthDate = LocalDate.parse("1997-12-15");
 
 	@InjectMocks
 	private PersonService service;
@@ -32,11 +35,12 @@ public class PersonServiceTest {
 
 	private Person person;
 	private PersonCreateDto personCreate;
+	private PersonUpdateDto personUpdate;
 
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		addPerson();
+		addPersons();
 	}
 
 	@Test
@@ -68,7 +72,33 @@ public class PersonServiceTest {
 		Assertions.assertEquals(birthDate, response.getBirthDate());		
 	}
 
-	private void addPerson() {
+	@Test
+	void whenUpdateNameThenReturnAPersonWithOnlyNameUpdated() {
+		personUpdate = new PersonUpdateDto();
+		personUpdate.setName(updatedName);
+		
+		Person response = service.update(person, personUpdate);
+		
+		Assertions.assertEquals(Person.class, response.getClass());
+		Assertions.assertNotEquals(name, personUpdate.getName());
+		Assertions.assertEquals(updatedName, response.getName());
+		Assertions.assertEquals(birthDate, response.getBirthDate());
+	}
+	
+	@Test
+	void whenUpdateBirthDateThenReturnAPersonWithOnlyBirthDateUpdated() {
+		personUpdate = new PersonUpdateDto();
+		personUpdate.setBirthDate(updatedBirthDate);
+		
+		Person response = service.update(person, personUpdate);
+		
+		Assertions.assertEquals(Person.class, response.getClass());
+		Assertions.assertNotEquals(birthDate, response.getBirthDate());
+		Assertions.assertEquals(name, response.getName());
+		Assertions.assertEquals(updatedBirthDate, response.getBirthDate());
+	}
+
+	private void addPersons() {
 		person = new Person();
 		person.setName(name);
 		person.setBirthDate(birthDate);
