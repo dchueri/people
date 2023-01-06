@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
@@ -48,10 +49,9 @@ public class PersonController {
 	}
 
 	@PostMapping
-	public ResponseEntity<PersonDto> registerPerson(@RequestBody @Valid PersonCreateDto personCreate,
-			UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<PersonDto> registerPerson(@RequestBody @Valid PersonCreateDto personCreate) {
 		Person person = personService.add(personCreate);
-		URI uri = uriBuilder.path("/person/{id}").buildAndExpand(person.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/person/{id}").buildAndExpand(person.getId()).toUri();
 		return ResponseEntity.created(uri).body(new PersonDto(person));
 	}
 
@@ -71,16 +71,16 @@ public class PersonController {
 
 	@PostMapping("/{id}/addresses")
 	public ResponseEntity<AddressDto> registerAddress(@PathVariable Long id,
-			@RequestBody @Valid AddressCreateDto addressCreate, UriComponentsBuilder uriBuilder) {
+			@RequestBody @Valid AddressCreateDto addressCreate) {
 		Person person = personService.getOneById(id);
 		Address address = addressService.add(addressCreate, person);
-		URI uri = uriBuilder.path("/person/{id}/addresses").buildAndExpand(address.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/person/{id}").buildAndExpand(address.getId()).toUri();
 		return ResponseEntity.created(uri).body(new AddressDto(address));
 	}
 
 	@PutMapping("/{id}/addresses/{addressId}")
 	@Transactional
-	public ResponseEntity<AddressDto> updatePerson(@PathVariable Long id, @PathVariable Long addressId,
+	public ResponseEntity<AddressDto> updateAddress(@PathVariable Long id, @PathVariable Long addressId,
 			@RequestBody AddressUpdateDto addressUpdate) {
 		Address address = addressService.getOneById(id);
 		Address addressUpdated = addressService.update(address, addressUpdate);
