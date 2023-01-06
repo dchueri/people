@@ -1,5 +1,6 @@
 package com.diegochueri.people.utils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
@@ -22,6 +23,15 @@ public class AddressMockCreate {
 	boolean isMainUpdated = false;
 
 	public Address addressAdd(Person person) {
+		Address address = new Address(street, cep, number, town, isMain, null);
+
+		address.setPerson(person);
+		address.setId(id);
+
+		return address;
+	}
+
+	public Address addressAdd(Person person, String street) {
 		Address address = new Address(street, cep, number, town, isMain, null);
 
 		address.setPerson(person);
