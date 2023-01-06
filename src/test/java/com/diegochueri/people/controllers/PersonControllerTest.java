@@ -17,7 +17,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.method.annotation.UriComponentsBuilderMethodArgumentResolver;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.diegochueri.people.controllers.dto.PersonCreateDto;
 import com.diegochueri.people.controllers.dto.PersonDto;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.services.PersonService;
@@ -47,15 +50,18 @@ class PersonControllerTest {
 
 	private PersonDto personDto;
 
+	private PersonCreateDto personCreateDto;
+
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 		person = personMockCreate.personAdd();
 		personDto = personMockCreate.personDtoAdd(person);
+		personCreateDto = personMockCreate.personCreateDtoAdd();
 	}
 
 	@Test
-	void WhenListAllPersonsThenReturnAPersonsListDto() {
+	void whenListAllPersonsThenReturnAPersonsListDto() {
 		List<Person> personsList = List.of(person, person);
 		List<PersonDto> personsDtoList = List.of(personDto, personDto);
 		when(service.getAll()).thenReturn(personsList);
@@ -69,4 +75,19 @@ class PersonControllerTest {
 		Assertions.assertEquals(ArrayList.class, response.getBody().getClass());
 		Assertions.assertEquals(PersonDto.class, response.getBody().get(0).getClass());
 	}
+
+	@Test
+	void whenRegisterPersonThenReturnACreatedPerson() {
+		when(service.add(Mockito.any())).thenReturn(person);
+		
+		ResponseEntity<PersonDto> response = controller.registerPerson(personCreateDto);
+		
+		Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		Assertions.assertEquals(PersonDto.class, response.getBody().getClass());
+		Assertions.assertEquals(id, response.getBody().getId());
+		Assertions.assertEquals(personCreateDto.getName(), response.getBody().getName());
+		Assertions.assertEquals(personCreateDto.getBirthDate(), response.getBody().getBirthDate());	
+	}
+	
+	
 }
