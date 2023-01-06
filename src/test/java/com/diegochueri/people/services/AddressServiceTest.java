@@ -2,7 +2,6 @@ package com.diegochueri.people.services;
 
 import static org.mockito.Mockito.when;
 
-import java.io.Console;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,11 +16,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressUpdateDto;
-import com.diegochueri.people.controllers.dto.PersonCreateDto;
-import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Address;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.AddressRepository;
+import com.diegochueri.people.utils.AddressMockCreate;
+import com.diegochueri.people.utils.PersonMockCreate;
 
 @DataJpaTest
 public class AddressServiceTest {
@@ -47,6 +46,9 @@ public class AddressServiceTest {
 	@Mock
 	private AddressRepository repository;
 
+	private PersonMockCreate personMockCreate = new PersonMockCreate();
+	private AddressMockCreate addressMockCreate = new AddressMockCreate();
+
 	private Person person;
 	private Address address;
 	private List<Address> addressList;
@@ -56,7 +58,15 @@ public class AddressServiceTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		addAddresses();
+
+		person = personMockCreate.personAdd();
+
+		address = addressMockCreate.addressAdd(person);
+		Address notMainAddress = new Address(town, cep, number, street, false, person);
+		addressList = List.of(address, notMainAddress);
+		person.setAdresses(addressList);
+		addressCreate = addressMockCreate.addressCreateDtoAdd();
+		addressUpdate = addressMockCreate.addressUpdateDtoAdd();
 	}
 
 	@Test
@@ -186,34 +196,5 @@ public class AddressServiceTest {
 		Assertions.assertEquals(Address.class, response.getClass());
 		Assertions.assertEquals(isMain, response.getIsMain());
 		Assertions.assertEquals(isMainUpdated, person.getAddresses().get(0).getIsMain());
-	}
-
-	private void addAddresses() {
-		person = new Person();
-		person.setId(id);
-		person.setName(name);
-		person.setBirthDate(birthDate);
-
-		address = new Address(street, cep, number, town, isMain, null);
-		address.setPerson(person);
-		address.setId(id);
-		Address notMainAddress = new Address(town, cep, number, street, false, null);
-		addressList = List.of(address, notMainAddress);
-		person.setAdresses(addressList);
-
-		addressCreate = new AddressCreateDto();
-		addressCreate.setCep(cep);
-		addressCreate.setIsMain(isMain);
-		addressCreate.setNumber(number);
-		addressCreate.setPersonId((long) 1);
-		addressCreate.setStreet(street);
-		addressCreate.setTown(town);
-
-		addressUpdate = new AddressUpdateDto();
-		addressUpdate.setCep(cepUpdated);
-		addressUpdate.setIsMain(isMainUpdated);
-		addressUpdate.setNumber(numberUpdated);
-		addressUpdate.setStreet(streetUpdated);
-		addressUpdate.setTown(townUpdated);
 	}
 }
