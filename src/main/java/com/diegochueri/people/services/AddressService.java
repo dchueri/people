@@ -10,6 +10,7 @@ import com.diegochueri.people.controllers.dto.AddressUpdateDto;
 import com.diegochueri.people.models.Address;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.AddressRepository;
+import com.diegochueri.people.validations.InputsValidate;
 
 @Service
 public class AddressService {
@@ -36,6 +37,9 @@ public class AddressService {
 	}
 
 	public Address update(Address address, AddressUpdateDto addressInfoToUpdate) {
+		if (addressInfoToUpdate.getIsMain() == false) {
+			InputsValidate.validateIfAddressUpdateInputIsNull(addressInfoToUpdate);
+		}
 		if (addressInfoToUpdate.getStreet() != null) {
 			address.setStreet(addressInfoToUpdate.getStreet());
 		}
