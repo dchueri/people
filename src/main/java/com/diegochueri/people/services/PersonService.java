@@ -9,6 +9,7 @@ import com.diegochueri.people.controllers.dto.PersonCreateDto;
 import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.PersonRepository;
+import com.diegochueri.people.validations.InputsValidate;
 
 @Service
 public class PersonService {
@@ -33,6 +34,7 @@ public class PersonService {
 	}
 	
 	public Person update(Person person, PersonUpdateDto personInfoToUpdate) {
+		InputsValidate.validateIfPersonUpdateInputIsNull(personInfoToUpdate);
 		if (personInfoToUpdate.getName() != null) {
 			person.setName(personInfoToUpdate.getName());
 		}

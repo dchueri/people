@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressDto;
@@ -27,6 +26,7 @@ import com.diegochueri.people.models.Person;
 import com.diegochueri.people.services.AddressService;
 import com.diegochueri.people.services.PersonService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -56,17 +56,17 @@ public class PersonController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PersonDetailsDto> listOnePerson(@PathVariable Long id) {
-		Person person = personService.getOneById(id);
-		return ResponseEntity.ok(new PersonDetailsDto(person));
+	public ResponseEntity<PersonDetailsDto> listOnePerson(@PathVariable Long id) {		
+			Person person = personService.getOneById(id);
+			return ResponseEntity.ok(new PersonDetailsDto(person));
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<PersonDto> updatePerson(@PathVariable Long id, @RequestBody PersonUpdateDto personUpdate) {
-		Person person = personService.getOneById(id);
-		Person personUpdated = personService.update(person, personUpdate);
-		return ResponseEntity.ok(new PersonDto(personUpdated));
+	public ResponseEntity<PersonDto> updatePerson(@PathVariable Long id, @RequestBody PersonUpdateDto personUpdate) {		
+			Person person = personService.getOneById(id);
+			Person personUpdated = personService.update(person, personUpdate);
+			return ResponseEntity.ok(new PersonDto(personUpdated));
 	}
 
 	@PostMapping("/{id}/addresses")
@@ -82,7 +82,7 @@ public class PersonController {
 	@Transactional
 	public ResponseEntity<AddressDto> updateAddress(@PathVariable Long id, @PathVariable Long addressId,
 			@RequestBody AddressUpdateDto addressUpdate) {
-		Address address = addressService.getOneById(id);
+		Address address = addressService.getOneById(addressId);
 		Address addressUpdated = addressService.update(address, addressUpdate);
 		return ResponseEntity.ok(new AddressDto(addressUpdated));
 	}

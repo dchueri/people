@@ -1,4 +1,4 @@
-package com.diegochueri.people.validations;
+package com.diegochueri.people.validations.dto;
 
 public class PersonCreateErrorDto {
 	private String field;

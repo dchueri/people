@@ -172,14 +172,14 @@ public class AddressServiceTest {
 
 	@Test
 	void whenUpdateIsMainThenReturnAnAddressWithOnlyIsMainUpdated() {
-		Address addressToUpdate = new Address(street, cep, number, town, isMain, person);
+		Address addressToUpdate = new Address(street, cep, number, town, isMainUpdated, person);
 		addressUpdate = new AddressUpdateDto();
-		addressUpdate.setIsMain(isMainUpdated);
+		addressUpdate.setIsMain(isMain);
 
 		Address response = service.update(addressToUpdate, addressUpdate);
 		Assertions.assertEquals(Address.class, response.getClass());
-		Assertions.assertNotEquals(isMain, response.getIsMain());
-		Assertions.assertEquals(isMainUpdated, response.getIsMain());
+		Assertions.assertNotEquals(isMainUpdated, response.getIsMain());
+		Assertions.assertEquals(isMain, response.getIsMain());
 		Assertions.assertEquals(number, response.getNumber());
 		Assertions.assertEquals(street, response.getStreet());
 		Assertions.assertEquals(cep, response.getCep());
