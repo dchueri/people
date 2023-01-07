@@ -165,7 +165,7 @@ class PersonControllerTest {
 	}
 
 	@Test
-	void whenUpdateStreetThenReturnAAddressWithOnlyStreetUpdated() {
+	void whenUpdateStreetThenReturnAnAddressWithOnlyStreetUpdated() {
 		addressUpdateDto = new AddressUpdateDto();
 		addressUpdateDto.setStreet("Updated Street");
 		String lastStreet = address.getStreet();

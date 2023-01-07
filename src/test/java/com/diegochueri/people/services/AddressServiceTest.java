@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressUpdateDto;
@@ -22,7 +23,7 @@ import com.diegochueri.people.repositories.AddressRepository;
 import com.diegochueri.people.utils.AddressMockCreate;
 import com.diegochueri.people.utils.PersonMockCreate;
 
-@DataJpaTest
+@SpringBootTest
 public class AddressServiceTest {
 
 	String street = "Rua Teste";
