@@ -34,11 +34,4 @@ public class PersonMockCreate {
 		personCreate.setBirthDate(birthDate);
 		return personCreate;
 	}
-
-	public PersonUpdateDto personUpdateDtoAdd() {
-		PersonUpdateDto personUpdate = new PersonUpdateDto();
-		personUpdate.setName(nameUpdated);
-		personUpdate.setBirthDate(birthDateUpdated);
-		return personUpdate;
-	}
 }

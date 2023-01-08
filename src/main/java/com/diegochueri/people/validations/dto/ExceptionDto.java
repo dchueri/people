@@ -12,8 +12,4 @@ public class ExceptionDto {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 }

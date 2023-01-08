@@ -1,5 +1,6 @@
 package com.diegochueri.people.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -12,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.diegochueri.people.controllers.dto.PersonCreateDto;
@@ -20,10 +20,11 @@ import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.PersonRepository;
 import com.diegochueri.people.utils.PersonMockCreate;
+import com.diegochueri.people.validations.dto.UpdateDataNotInformedException;
 
 @SpringBootTest
 public class PersonServiceTest {
-	
+
 	Long id = (long) 1;
 	String name = "Person";
 	String updatedName = "Person Updated";
