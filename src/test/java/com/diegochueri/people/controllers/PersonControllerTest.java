@@ -2,6 +2,7 @@ package com.diegochueri.people.controllers;
 
 import static org.mockito.Mockito.when;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressDto;
@@ -31,7 +40,11 @@ import com.diegochueri.people.utils.AddressMockCreate;
 import com.diegochueri.people.utils.PersonMockCreate;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class PersonControllerTest {
+
+	@Autowired
+	private MockMvc mockMvc;
 
 	@InjectMocks
 	private PersonController controller;
@@ -93,6 +106,15 @@ class PersonControllerTest {
 		Assertions.assertEquals(ArrayList.class, response.getBody().getClass());
 		Assertions.assertEquals(PersonDto.class, response.getBody().get(0).getClass());
 		Assertions.assertEquals(2, response.getBody().size());
+	}
+
+	@Test
+	void whenRegisterInputHasntABirthDateThenThrowsMethodArgumentNotValidException() throws Exception {
+		URI uri = new URI("/persons");
+		String jsonString = "{\"name\":\"Teste\"}";
+		mockMvc.perform(MockMvcRequestBuilders.post(uri).content(jsonString).contentType(MediaType.APPLICATION_JSON))
+				.andExpectAll(MockMvcResultMatchers.status().isBadRequest(),
+						MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
 
 	@Test

@@ -1,5 +1,6 @@
 package com.diegochueri.people.services;
 
+import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -12,16 +13,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressUpdateDto;
+import com.diegochueri.people.controllers.dto.PersonUpdateDto;
 import com.diegochueri.people.models.Address;
 import com.diegochueri.people.models.Person;
 import com.diegochueri.people.repositories.AddressRepository;
 import com.diegochueri.people.utils.AddressMockCreate;
 import com.diegochueri.people.utils.PersonMockCreate;
+import com.diegochueri.people.validations.InputsValidate;
+import com.diegochueri.people.validations.dto.UpdateDataNotInformedException;
 
 @SpringBootTest
 public class AddressServiceTest {
@@ -45,7 +48,13 @@ public class AddressServiceTest {
 	private AddressService service;
 
 	@Mock
+	private AddressService serviceMock;
+
+	@Mock
 	private AddressRepository repository;
+	
+	@Mock
+	private InputsValidate inputsValidate;
 
 	private PersonMockCreate personMockCreate = new PersonMockCreate();
 	private AddressMockCreate addressMockCreate = new AddressMockCreate();
