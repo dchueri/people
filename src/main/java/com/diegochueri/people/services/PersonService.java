@@ -16,6 +16,8 @@ public class PersonService {
 	
 	@Autowired
 	private PersonRepository repository;
+	
+	private InputsValidate inputsValidate = new InputsValidate();
 
 	public List<Person> getAll() {
 		List<Person> persons = repository.findAll();
@@ -34,7 +36,7 @@ public class PersonService {
 	}
 	
 	public Person update(Person person, PersonUpdateDto personInfoToUpdate) {
-		InputsValidate.validateIfPersonUpdateInputIsNull(personInfoToUpdate);
+		inputsValidate.validateIfPersonUpdateInputIsNull(personInfoToUpdate);
 		if (personInfoToUpdate.getName() != null) {
 			person.setName(personInfoToUpdate.getName());
 		}
