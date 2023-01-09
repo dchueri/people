@@ -61,6 +61,10 @@ public class AddressService {
 
 		return address;
 	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 
 	public void removeMainAddress(Person person) {
 		List<Address> addresses = person.getAddresses();
