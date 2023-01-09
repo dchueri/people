@@ -1,7 +1,8 @@
+
 # People API - Java
 ![Badge In Development](http://img.shields.io/static/v1?label=STATUS&message=IN%20DEVELOPMENT&color=blue&style=for-the-badge)  ![Badge Versão](https://img.shields.io/badge/VERSION-1.0.0-blue?style=for-the-badge)
 ![Badge Coverage](https://img.shields.io/badge/tests%20coverage-100%25-GREEN?style=for-the-badge)
-![Badge Testes](https://img.shields.io/badge/tests-29%E2%9C%94-brightgreen?style=for-the-badge)
+![Badge Testes](https://img.shields.io/badge/tests-32%E2%9C%94-brightgreen?style=for-the-badge)
 
 ## Index
 
@@ -36,7 +37,11 @@ First you need to clone this repository typing the command below in your termina
 
 Method: **GET**
 
-Return example:
+***Return example:***
+
+Status: **200**
+
+Body:
 ```json
 [
 	{
@@ -57,7 +62,11 @@ Return example:
 
 Method: **GET**
 
-Return example:
+***Return example:***
+
+Status: **200**
+
+Body:
 ```json
 {
 	"id": 1,
@@ -82,7 +91,7 @@ Return example:
 
 Method: **POST**
 
-Request body example:
+***Request body example:***
 ```json
 {
 	"name": "New person",     // String
@@ -90,7 +99,11 @@ Request body example:
 }
 ```
 
-Return example:
+***Return example:***
+
+Status: **201**
+
+Body:
 ```json
 {
 	"id": 1,
@@ -104,16 +117,18 @@ Return example:
 
 Method: **PUT**
 
-Request body example:
+***Request body example:***
 ```json
 {
 	"name": "Updated name",      // String
-	//   or/and
-	//"birthDate": "1995-03-16"  // Date on format: YYYY-MM-DD
 }
 ```
 
-Return example:
+***Return example:***
+
+Status: **200**
+
+Body:
 ```json
 {
 	"id": 1,
@@ -127,7 +142,7 @@ Return example:
 
 Method: **POST**
 
-Request body example:
+***Request body example:***
 ```json
 {
 	"street": "Rua 08",   // String
@@ -139,7 +154,11 @@ Request body example:
 }
 ```
 
-Return example:
+***Return example:***
+
+Status: **201**
+
+Body:
 ```json
 {
 	"id": 1,
@@ -158,14 +177,18 @@ Return example:
 
 Method: **PUT**
 
-Request body example:
+***Request body example:***
 ```json
 {
 	"street": "Rua 07"  // String
 }
 ```
 
-Return example:
+***Return example***:
+
+Status: **204**
+
+Body:
 ```json
 {
 	"id": 1,
@@ -176,8 +199,16 @@ Return example:
 	"isMain": false
 }
 ```
-
 > **IMPORTANT:** A person can have just one main address. When the user updated a address as the main address, your last main address is defined with `isMain = false`.
+
+### Delete address
+`localhost:8080/persons/{personId}/addresses/{addressId}`
+
+Method: **DELETE**
+
+***Return example:***
+
+Status: **204**
 
 ## Technologies
 
