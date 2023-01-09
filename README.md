@@ -15,7 +15,8 @@
 	* [Add person](#add-person)
 	* [Update person](#update-person)
 	* [Add address](#add-address)
-	*  [Update address](#update-address)
+	* [Update address](#update-address)
+	* [Delete address](#delete-address)
 * [Technologies](#technologies)
 * [Author](#author)
 
