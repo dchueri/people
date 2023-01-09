@@ -1,5 +1,8 @@
 package com.diegochueri.people.controllers;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.diegochueri.people.controllers.dto.AddressCreateDto;
 import com.diegochueri.people.controllers.dto.AddressDto;
@@ -206,5 +211,17 @@ class PersonControllerTest {
 		Assertions.assertEquals(address.getTown(), response.getBody().getTown());
 		Assertions.assertEquals(address.getCep(), response.getBody().getCep());
 		Assertions.assertEquals(address.getNumber(), response.getBody().getNumber());
+	}
+
+	@Test
+	void whenDeleteAnAddressThenReturnStatusOkWithoutResponseBody() {
+		doNothing().when(addressServiceMock).delete(Mockito.anyLong());
+
+		ResponseEntity<AddressDto> response = controller.deleteAddress(id, (long) 1);
+
+		Assertions.assertNotNull(response);
+		Assertions.assertEquals(ResponseEntity.class, response.getClass());
+		verify(addressServiceMock, times(1)).delete(Mockito.anyLong());
+		Assertions.assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 	}
 }

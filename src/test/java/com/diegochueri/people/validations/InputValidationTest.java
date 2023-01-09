@@ -1,9 +1,15 @@
 package com.diegochueri.people.validations;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +25,9 @@ class InputValidationTest {
 	@InjectMocks
 	private InputsValidate inputsValidate;
 
+	@Mock
+	private InputsValidate inputsValidateMock;
+
 	private Person person;
 	private PersonMockCreate personsMock = new PersonMockCreate();
 
@@ -33,15 +42,15 @@ class InputValidationTest {
 		PersonUpdateDto personUpdateInfo = new PersonUpdateDto();
 		personUpdateInfo.setName("Updated Name");
 
-		Assertions.assertDoesNotThrow(() -> InputsValidate.validateIfPersonUpdateInputIsNull(personUpdateInfo));
+		Assertions.assertDoesNotThrow(() -> inputsValidate.validateIfPersonUpdateInputIsNull(personUpdateInfo));
 	}
 
 	@Test
 	void whenUpdatePersonInputIsNullThenThrowsUpdateDataNotInformedException() {
 		PersonUpdateDto nullPersonUpdateInfo = new PersonUpdateDto();
 
-		Exception response = Assertions.assertThrows(UpdateDataNotInformedException.class,
-				() -> InputsValidate.validateIfPersonUpdateInputIsNull(nullPersonUpdateInfo));
+		UpdateDataNotInformedException response = Assertions.assertThrows(UpdateDataNotInformedException.class,
+				() -> inputsValidate.validateIfPersonUpdateInputIsNull(nullPersonUpdateInfo));
 
 		Assertions.assertEquals(UpdateDataNotInformedException.class, response.getClass());
 	}
@@ -51,7 +60,7 @@ class InputValidationTest {
 		AddressUpdateDto addressUpdateInfo = new AddressUpdateDto();
 		addressUpdateInfo.setStreet("Updated Street");
 
-		Assertions.assertDoesNotThrow(() -> InputsValidate.validateIfAddressUpdateInputIsNull(addressUpdateInfo));
+		Assertions.assertDoesNotThrow(() -> inputsValidate.validateIfAddressUpdateInputIsNull(addressUpdateInfo));
 	}
 
 	@Test
@@ -59,7 +68,7 @@ class InputValidationTest {
 		AddressUpdateDto nullAddressUpdateInfo = new AddressUpdateDto();
 
 		Exception response = Assertions.assertThrows(UpdateDataNotInformedException.class,
-				() -> InputsValidate.validateIfAddressUpdateInputIsNull(nullAddressUpdateInfo));
+				() -> inputsValidate.validateIfAddressUpdateInputIsNull(nullAddressUpdateInfo));
 
 		Assertions.assertEquals(UpdateDataNotInformedException.class, response.getClass());
 	}

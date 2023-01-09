@@ -92,8 +92,8 @@ public class PersonController {
 	}
 	
 	@DeleteMapping("/{id}/addresses/{addressId}")
-	public ResponseEntity<Object> deleteAddress(@PathVariable Long id, @PathVariable Long addressId) {
+	public ResponseEntity<AddressDto> deleteAddress(@PathVariable Long id, @PathVariable Long addressId) {
 		addressService.delete(addressId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		return ResponseEntity.noContent().build();
 	}
 }

@@ -18,6 +18,8 @@ public class AddressService {
 	@Autowired
 	private AddressRepository repository;
 
+	private InputsValidate inputsValidate = new InputsValidate();
+
 	public List<Address> getAllOfPerson(Long id) {
 		List<Address> addressList = repository.findAllByPersonId(id);
 		return addressList;
@@ -38,7 +40,7 @@ public class AddressService {
 
 	public Address update(Address address, AddressUpdateDto addressInfoToUpdate) {
 		if (addressInfoToUpdate.getIsMain() == false) {
-			InputsValidate.validateIfAddressUpdateInputIsNull(addressInfoToUpdate);
+			inputsValidate.validateIfAddressUpdateInputIsNull(addressInfoToUpdate);
 		}
 		if (addressInfoToUpdate.getStreet() != null) {
 			address.setStreet(addressInfoToUpdate.getStreet());
@@ -61,7 +63,7 @@ public class AddressService {
 
 		return address;
 	}
-	
+
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}

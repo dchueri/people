@@ -1,6 +1,9 @@
 package com.diegochueri.people.services;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mockitoSession;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -206,5 +209,11 @@ public class AddressServiceTest {
 		Assertions.assertEquals(Address.class, response.getClass());
 		Assertions.assertEquals(isMain, response.getIsMain());
 		Assertions.assertEquals(isMainUpdated, person.getAddresses().get(0).getIsMain());
+	}
+	
+	@Test
+	void whenDeleteAnAddressThenReturnNothing() {
+		doNothing().when(repository).deleteById(Mockito.anyLong());
+		service.delete(id);
 	}
 }

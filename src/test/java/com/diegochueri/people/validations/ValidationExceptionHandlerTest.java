@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -53,6 +54,19 @@ class ValidationExceptionHandlerTest {
 	void whenAddressIdIsInvalidThenThrowsEntityNotFoundException() {
 		ResponseEntity<IdNotFoundExceptionDto> response = exceptionHandler
 				.handle(new EntityNotFoundException("Address"));
+
+		Assertions.assertNotNull(response.getBody());
+		Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		Assertions.assertEquals(ResponseEntity.class, response.getClass());
+		Assertions.assertEquals(IdNotFoundExceptionDto.class, response.getBody().getClass());
+		Assertions.assertEquals("ID de Endereço informado não encontrado", response.getBody().getMessage());
+	}
+	
+
+	@Test
+	void whenAddressIdToDeleteIsInvalidThenThrowsEmptyResultDataAccessException() {
+		ResponseEntity<IdNotFoundExceptionDto> response = exceptionHandler
+				.handle(new EmptyResultDataAccessException(0));
 
 		Assertions.assertNotNull(response.getBody());
 		Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
